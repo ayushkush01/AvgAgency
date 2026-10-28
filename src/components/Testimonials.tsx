@@ -1,6 +1,5 @@
 import { testimonials } from '../data/content'
 import { tints } from '../lib/tints'
-import { QuoteIcon } from './ui/Icons'
 import Reveal from './ui/Reveal'
 
 export default function Testimonials() {
