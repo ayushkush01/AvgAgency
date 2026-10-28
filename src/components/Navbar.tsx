@@ -123,6 +123,26 @@ export default function Navbar() {
             {navAction.label}
             <ArrowRightIcon className="h-4 w-4" />
           </a>
+
+          {/* Attribution */}
+          <div className="mt-10 border-t border-ink/5 pt-8 text-center">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/30">
+              Made & Designed by
+            </p>
+            <a
+              href="https://craftorax.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-3 inline-flex flex-col items-center"
+            >
+              <span className="font-display text-[22px] font-bold tracking-tight text-ink transition-colors group-hover:text-accent">
+                Craftora<span className="text-[#A3E635]">X</span>
+              </span>
+              <span className="mt-1 text-[12px] font-medium text-ink/40 group-hover:text-ink/60">
+                craftoraxcoders@gmail.com
+              </span>
+            </a>
+          </div>
         </nav>
       </div>
     </header>
