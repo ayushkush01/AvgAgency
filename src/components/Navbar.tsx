@@ -3,7 +3,7 @@ import { brand, navAction, navLinks } from '../data/content'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { ArrowRightIcon, CloseIcon, MenuIcon } from './ui/Icons'
 
-export default function Navbar() {
+export default function Navbar({ onContactClick }: { onContactClick: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const active = useActiveSection(navLinks)
 
@@ -67,10 +67,10 @@ export default function Navbar() {
 
         {/* Desktop CTA */}
         <div className="flex items-center gap-3">
-          <a href={navAction.href} className="btn-accent hidden lg:inline-flex">
+          <button onClick={onContactClick} className="btn-accent hidden lg:inline-flex">
             {navAction.label}
             <ArrowRightIcon className="h-4 w-4" />
-          </a>
+          </button>
 
           {/* Mobile menu toggle */}
           <button
@@ -115,14 +115,16 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <a
-            href={navAction.href}
-            onClick={() => setMenuOpen(false)}
+          <button
+            onClick={() => {
+              setMenuOpen(false)
+              onContactClick()
+            }}
             className="btn-accent mt-3 w-full"
           >
             {navAction.label}
             <ArrowRightIcon className="h-4 w-4" />
-          </a>
+          </button>
 
           {/* Attribution */}
           <div className="mt-10 border-t border-ink/5 pt-8 text-center">

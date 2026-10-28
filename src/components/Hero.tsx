@@ -1,7 +1,7 @@
 import { hero } from '../data/content'
 import { ArrowRightIcon } from './ui/Icons'
 
-export default function Hero() {
+export default function Hero({ onContactClick }: { onContactClick: () => void }) {
   return (
     <section
       id="home"
@@ -33,10 +33,10 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
-            <a href={hero.primaryCta.href} className="btn-accent">
+            <button onClick={onContactClick} className="btn-accent">
               {hero.primaryCta.label}
               <ArrowRightIcon className="h-4 w-4" />
-            </a>
+            </button>
             <a href={hero.secondaryCta.href} className="btn-ghost">
               {hero.secondaryCta.label}
             </a>

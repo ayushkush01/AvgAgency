@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
@@ -7,8 +8,14 @@ import Navbar from './components/Navbar'
 import OurWork from './components/OurWork'
 import Testimonials from './components/Testimonials'
 import WhatWeDo from './components/WhatWeDo'
+import ContactModal from './components/ContactModal'
 
 export default function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
+
   return (
     <div className="min-h-screen bg-white">
       <a
@@ -18,19 +25,21 @@ export default function App() {
         Skip to content
       </a>
 
-      <Navbar />
+      <Navbar onContactClick={openModal} />
 
       <main id="main">
-        <Hero />
-        <WhatWeDo />
+        <Hero onContactClick={openModal} />
+        <WhatWeDo onContactClick={openModal} />
         <OurWork />
         <HowWeWork />
-        <Impact />
+        <Impact onContactClick={openModal} />
         <Testimonials />
-        <CTA />
+        <CTA onContactClick={openModal} />
       </main>
 
-      <Footer />
+      <Footer onContactClick={openModal} />
+
+      <ContactModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   )
 }

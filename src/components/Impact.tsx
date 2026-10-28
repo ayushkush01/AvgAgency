@@ -2,7 +2,7 @@ import { impact } from '../data/content'
 import { ArrowRightIcon } from './ui/Icons'
 import Reveal from './ui/Reveal'
 
-export default function Impact() {
+export default function Impact({ onContactClick }: { onContactClick: () => void }) {
   return (
     <section className="bg-dark py-16 text-white sm:py-20 lg:py-28">
       <div className="shell grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
@@ -31,10 +31,10 @@ export default function Impact() {
           <p className="mt-5 max-w-md text-[16px] leading-relaxed text-white/55 sm:text-[17px]">
             {impact.paragraph}
           </p>
-          <a href={impact.cta.href} className="btn-accent mt-8">
+          <button onClick={onContactClick} className="btn-accent mt-8">
             {impact.cta.label}
             <ArrowRightIcon className="h-4 w-4" />
-          </a>
+          </button>
         </Reveal>
       </div>
     </section>

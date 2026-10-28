@@ -2,7 +2,7 @@ import { cta } from '../data/content'
 import { ArrowRightIcon } from './ui/Icons'
 import Reveal from './ui/Reveal'
 
-export default function CTA() {
+export default function CTA({ onContactClick }: { onContactClick: () => void }) {
   return (
     <section
       id="contact"
@@ -29,10 +29,10 @@ export default function CTA() {
           </p>
 
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-            <a href={cta.button.href} className="btn-accent">
+            <button onClick={onContactClick} className="btn-accent">
               {cta.button.label}
               <ArrowRightIcon className="h-4 w-4" />
-            </a>
+            </button>
             <a
               href={`mailto:${cta.email}`}
               className="text-[15px] font-semibold text-ink/70 underline-offset-4 transition-colors duration-200 hover:text-accent hover:underline sm:text-[16px]"

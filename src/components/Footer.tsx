@@ -12,7 +12,7 @@ const socialIcons = {
   X: XIcon,
 } as const
 
-export default function Footer() {
+export default function Footer({ onContactClick }: { onContactClick: () => void }) {
   return (
     <footer className="bg-dark text-white">
       <div className="shell py-14 lg:py-16">
@@ -87,10 +87,10 @@ export default function Footer() {
               ))}
             </dl>
 
-            <a href={footer.contactCta.href} className="btn-accent mt-7">
+            <button onClick={onContactClick} className="btn-accent mt-7">
               {footer.contactCta.label}
               <ArrowRightIcon className="h-4 w-4" />
-            </a>
+            </button>
           </div>
         </div>
 

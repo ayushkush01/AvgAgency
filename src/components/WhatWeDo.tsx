@@ -3,7 +3,7 @@ import { tints } from '../lib/tints'
 import { iconMap, ArrowRightIcon } from './ui/Icons'
 import Reveal from './ui/Reveal'
 
-export default function WhatWeDo() {
+export default function WhatWeDo({ onContactClick }: { onContactClick: () => void }) {
   return (
     <section id="services" className="bg-white py-16 sm:py-20 lg:py-24">
       <div className="shell">
@@ -15,13 +15,13 @@ export default function WhatWeDo() {
               {services.heading}
             </h2>
           </div>
-          <a
-            href={services.linkHref}
+          <button
+            onClick={onContactClick}
             className="group inline-flex shrink-0 items-center gap-2 text-[15px] font-bold text-ink transition-colors duration-200 hover:text-accent"
           >
             {services.linkLabel}
             <ArrowRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </a>
+          </button>
         </Reveal>
 
         {/* 2 x 2 cards */}
@@ -60,13 +60,13 @@ export default function WhatWeDo() {
                     {item.description}
                   </p>
 
-                  <a
-                    href={services.linkHref}
+                  <button
+                    onClick={onContactClick}
                     className="mt-6 inline-flex w-fit items-center gap-2 text-[14px] font-bold text-ink transition-colors duration-200 group-hover:text-accent"
                   >
                     Learn more
                     <ArrowRightIcon className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-                  </a>
+                  </button>
                 </article>
               </Reveal>
             )
