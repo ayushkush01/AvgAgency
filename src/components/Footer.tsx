@@ -96,21 +96,21 @@ export default function Footer() {
 
         <hr className="mt-14 border-t border-white/8" />
 
-        <div className="mt-7 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-          <p className="text-[13px] text-white/45">{footer.copyright}</p>
+        <div className="mt-7 flex flex-col items-center justify-between gap-6 sm:flex-row">
+          <p className="text-[13px] text-white/40">{footer.copyright}</p>
           
-          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-8">
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:gap-10">
             <a
               href="https://craftorax.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2.5"
+              className="group flex items-center gap-3"
             >
-              <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-white/30 transition-colors group-hover:text-white/50">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 transition-colors group-hover:text-white/40">
                 Made by
               </span>
-              <span className="font-display text-[16px] font-bold text-white transition-colors group-hover:text-accent">
-                Craftora<span className="text-[#A3E635]">X</span>
+              <span className="font-display text-[17px] font-bold tracking-tight text-white transition-colors group-hover:text-accent">
+                Craftora<span className="text-[#A3E635] drop-shadow-[0_0_8px_rgba(163,230,53,0.4)]">X</span>
               </span>
             </a>
 
@@ -119,7 +119,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-[13px] text-white/45 transition-colors duration-200 hover:text-accent"
+                    className="text-[13px] text-white/40 transition-colors duration-200 hover:text-accent"
                   >
                     {link.label}
                   </a>
