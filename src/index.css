@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-bold tracking-tight;
+    text-wrap: balance;
+  }
+
+  /* Keep section anchors clear of the sticky navbar */
+  section[id] {
+    scroll-margin-top: 88px;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ff4d2e;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-10;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[12px] font-bold uppercase leading-none tracking-[0.2em] text-accent sm:text-[13px];
+  }
+
+  .eyebrow-dot {
+    @apply inline-block h-2.5 w-2.5 rounded-full bg-accent;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-bold transition duration-200 ease-out;
+  }
+
+  .btn-accent {
+    @apply btn bg-accent text-white shadow-soft hover:-translate-y-0.5 hover:bg-accent-dark hover:shadow-lift;
+  }
+
+  .btn-ghost {
+    @apply btn border border-ink/15 bg-white text-ink hover:-translate-y-0.5 hover:border-ink/30 hover:shadow-soft;
+  }
+
+  .card {
+    @apply rounded-card border border-ink/10 bg-white;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(rgba(10, 10, 10, 0.11) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Thick "highlighter" bar sitting behind the accent words in the hero H1 */
+  .highlight-underline::after {
+    content: '';
+    position: absolute;
+    left: -0.04em;
+    right: -0.04em;
+    bottom: 0.12em;
+    height: 0.28em;
+    border-radius: 999px;
+    background: #ffd5cb;
+    z-index: -1;
+  }
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
