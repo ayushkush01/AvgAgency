@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import emailjs from '@emailjs/browser'
 import { CloseIcon, ArrowRightIcon } from './ui/Icons'
 
 type ContactModalProps = {
@@ -7,8 +8,10 @@ type ContactModalProps = {
 }
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
+  const formRef = useRef<HTMLFormElement>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   // Prevent scrolling when modal is open
   useEffect(() => {
@@ -34,18 +37,34 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   if (!isOpen) return null
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!formRef.current) return
+
     setIsSubmitting(true)
-    // Simulate API call
-    setTimeout(() => {
+    setErrorMessage('')
+
+    try {
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+
       setIsSubmitting(false)
       setIsSuccess(true)
+      
+      // Auto close after success
       setTimeout(() => {
         setIsSuccess(false)
         onClose()
-      }, 2000)
-    }, 1500)
+      }, 2500)
+    } catch (error) {
+      console.error('EmailJS Error:', error)
+      setIsSubmitting(false)
+      setErrorMessage('Something went wrong. Please try again or email us directly.')
+    }
   }
 
   return (
@@ -102,7 +121,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 discuss your brand's growth.
               </p>
 
-              <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+              <form ref={formRef} onSubmit={handleSubmit} className="mt-8 space-y-5">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div className="space-y-2">
                     <label
@@ -114,6 +133,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     <input
                       type="text"
                       id="name"
+                      name="name"
                       required
                       placeholder="e.g. Rahul Sharma"
                       className="w-full rounded-2xl border border-ink/10 bg-ink/[0.02] px-5 py-3.5 text-ink outline-none transition-all focus:border-accent/30 focus:bg-white focus:ring-4 focus:ring-accent/5"
@@ -129,6 +149,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     <input
                       type="email"
                       id="email"
+                      name="email"
                       required
                       placeholder="rahul@brand.com"
                       className="w-full rounded-2xl border border-ink/10 bg-ink/[0.02] px-5 py-3.5 text-ink outline-none transition-all focus:border-accent/30 focus:bg-white focus:ring-4 focus:ring-accent/5"
@@ -146,6 +167,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   <input
                     type="text"
                     id="brand"
+                    name="brand"
                     required
                     placeholder="e.g. Mamaearth"
                     className="w-full rounded-2xl border border-ink/10 bg-ink/[0.02] px-5 py-3.5 text-ink outline-none transition-all focus:border-accent/30 focus:bg-white focus:ring-4 focus:ring-accent/5"
@@ -161,12 +183,17 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     required
                     rows={4}
                     placeholder="Tell us about your goals..."
                     className="w-full resize-none rounded-2xl border border-ink/10 bg-ink/[0.02] px-5 py-3.5 text-ink outline-none transition-all focus:border-accent/30 focus:bg-white focus:ring-4 focus:ring-accent/5"
                   />
                 </div>
+
+                {errorMessage && (
+                  <p className="text-sm font-medium text-red-500">{errorMessage}</p>
+                )}
 
                 <button
                   type="submit"
