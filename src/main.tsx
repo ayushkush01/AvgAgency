@@ -1,7 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
+import { captureUtm } from './lib/analytics'
 import './index.css'
+
+// Record first-touch UTM parameters before anything else renders.
+captureUtm()
 
 const container = document.getElementById('root')
 

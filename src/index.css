@@ -2,31 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==================================================================
+ * BRAND TOKENS — the single place to rebrand the site.
+ *
+ * To change the accent colour, edit only the three `--accent-*` values
+ * below. Everything else (buttons, hovers, tints, focus rings, glows)
+ * is derived from them via `tailwind.config.js`.
+ *
+ * Values are space-separated RGB channels so Tailwind's `/opacity`
+ * modifiers keep working, e.g. `bg-accent/10`.
+ * ================================================================== */
+:root {
+  /* Electric blue accent */
+  --accent-rgb: 37 99 255; /* #2563FF */
+  --accent-hover-rgb: 29 79 216; /* #1D4FD8 */
+  --accent-soft-rgb: 234 240 255; /* #EAF0FF */
+
+  /* Neutral scale */
+  --ink-rgb: 10 10 11; /* #0A0A0B — headings + dark sections */
+  --surface-rgb: 18 18 20; /* #121214 — cards on dark sections */
+  --text-rgb: 17 24 39; /* #111827 — body text */
+  --muted-rgb: 107 114 128; /* #6B7280 — secondary text */
+  --line-rgb: 229 231 235; /* #E5E7EB — borders */
+  --subtle-rgb: 246 248 251; /* #F6F8FB — subtle section background */
+
+  --page: #ffffff;
+  --hairline: rgb(var(--line-rgb));
+}
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-white font-sans text-ink antialiased;
+    @apply bg-white font-sans text-body antialiased;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-display font-bold tracking-tight;
+    @apply font-display font-semibold tracking-tight;
     text-wrap: balance;
   }
 
-  /* Keep section anchors clear of the sticky navbar */
-  section[id] {
-    scroll-margin-top: 88px;
+  /* Clear the sticky navbar when jumping to an anchor */
+  [id] {
+    scroll-margin-top: 96px;
   }
 
+  /* Blue focus ring, keyboard only. Mouse clicks never show it. */
   :focus-visible {
-    outline: 2px solid #ff4d2e;
-    outline-offset: 3px;
+    outline: 2px solid rgb(var(--accent-rgb));
+    outline-offset: 2px;
     border-radius: 4px;
   }
 }
@@ -37,55 +66,104 @@
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-[12px] font-bold uppercase leading-none tracking-[0.2em] text-accent sm:text-[13px];
+    @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase leading-none tracking-[0.14em] text-accent sm:text-[12px];
   }
 
   .eyebrow-dot {
-    @apply inline-block h-2.5 w-2.5 rounded-full bg-accent;
+    @apply inline-block h-1.5 w-1.5 rounded-full bg-accent;
   }
 
+  /* On near-black sections the base accent is too dark — use the soft tint */
+  .on-dark .eyebrow,
+  .eyebrow-on-dark {
+    color: rgb(var(--accent-soft-rgb));
+  }
+
+  /* ---------- Buttons ---------- */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-bold transition duration-200 ease-out;
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold transition duration-200 ease-out;
   }
 
   .btn-accent {
-    @apply btn bg-accent text-white shadow-soft hover:-translate-y-0.5 hover:bg-accent-dark hover:shadow-lift;
+    @apply btn bg-accent text-white hover:bg-accent-hover;
   }
 
   .btn-ghost {
-    @apply btn border border-ink/15 bg-white text-ink hover:-translate-y-0.5 hover:border-ink/30 hover:shadow-soft;
+    @apply btn border border-line bg-white text-ink hover:border-ink/25 hover:bg-subtle;
   }
 
+  .btn-on-dark {
+    @apply btn border border-white/20 bg-white/5 text-white hover:border-white/40 hover:bg-white/10;
+  }
+
+  .btn-text {
+    @apply inline-flex min-h-[48px] items-center gap-1.5 text-[15px] font-semibold text-accent transition duration-200 hover:gap-2.5 hover:text-accent-hover;
+  }
+
+  /* ---------- Surfaces ---------- */
   .card {
-    @apply rounded-card border border-ink/10 bg-white;
+    @apply rounded-card border border-line bg-white transition-shadow duration-200 ease-out hover:shadow-soft;
   }
 
+  /* Blue icon on a soft-blue tile — the one icon treatment used site-wide. */
+  .icon-tile {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent;
+  }
+
+  /* ---------- Nav ---------- */
+  .nav-link {
+    @apply relative inline-flex min-h-[44px] items-center text-[15px] font-medium text-ink/65 transition-colors duration-200 hover:text-ink;
+  }
+
+  .nav-link[aria-current='page'] {
+    @apply text-ink;
+  }
+
+  .nav-link[aria-current='page']::after {
+    content: '';
+    @apply absolute bottom-1.5 left-0 right-0 mx-auto h-0.5 w-full rounded-full bg-accent;
+  }
+
+  /* ---------- Form controls ---------- */
+  .field {
+    @apply w-full rounded-2xl border border-line bg-white px-4 py-3 text-[15px] text-body outline-none transition duration-200 placeholder:text-muted/70 hover:border-ink/20 focus:border-accent focus:ring-4 focus:ring-accent/10;
+  }
+
+  .field-label {
+    @apply text-[12px] font-medium uppercase leading-none tracking-[0.08em] text-muted;
+  }
+
+  .field-error {
+    @apply mt-1.5 text-[13px] font-medium text-[#C81E1E];
+  }
+
+  /* ---------- Decorative ---------- */
   .dot-grid {
-    background-image: radial-gradient(rgba(10, 10, 10, 0.11) 1px, transparent 1px);
+    background-image: radial-gradient(rgb(var(--line-rgb)) 1px, transparent 1px);
     background-size: 22px 22px;
   }
 
-  /* Thick "highlighter" bar sitting behind the accent words in the hero H1 */
-  .highlight-underline::after {
-    content: '';
-    position: absolute;
-    left: -0.04em;
-    right: -0.04em;
-    bottom: 0.12em;
-    height: 0.28em;
-    border-radius: 999px;
-    background: #ffd5cb;
-    z-index: -1;
+  .dot-grid-dark {
+    background-image: radial-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Fine 1px grid used behind dark hero / CTA sections */
+  .line-grid-dark {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
   }
 }
 
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(16px);
   transition:
-    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
