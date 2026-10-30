@@ -7,7 +7,6 @@ import { creatorCategories, formOptions, forms } from '../../content/site'
 import { EMAILJS_VARS, HONEYPOT_FIELD } from '../../constants/emailjs'
 import { joinList, submitBrandInquiry, type SubmitOutcome } from '../../lib/emailjs'
 import { trackEvent } from '../../lib/analytics'
-import { getMailtoUrl } from '../../lib/links'
 import ActionButton from '../ui/ActionButton'
 import { ArrowRightIcon, LoaderIcon } from '../ui/Icons'
 import {

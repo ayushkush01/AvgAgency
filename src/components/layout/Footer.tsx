@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { contact, footer, nav, BRAND_NAME } from '../../content/site'
+import { contact, footer, nav } from '../../content/site'
 import { trackEvent } from '../../lib/analytics'
 import {
   getInstagramUrl,
@@ -13,7 +13,6 @@ import {
   ArrowRightIcon,
   InstagramIcon,
   LinkedInIcon,
-  MailIcon,
   WhatsAppIcon,
 } from '../ui/Icons'
 

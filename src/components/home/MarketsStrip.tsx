@@ -1,6 +1,5 @@
 import { markets } from '../../content/site'
 import Reveal from '../ui/Reveal'
-import { GlobeIcon } from '../ui/Icons'
 import { FlagIcon } from '../ui/FlagIcon'
 
 /** Region badges only — deliberately no client logos or brand claims. */

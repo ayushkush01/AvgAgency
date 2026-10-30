@@ -1,6 +1,6 @@
 import { process } from '../../content/site'
 import Reveal from '../ui/Reveal'
-import { Section, SectionHeading } from '../ui/Section'
+import { SectionHeading } from '../ui/Section'
 
 export default function CampaignProcess() {
   const lastIndex = process.steps.length - 1
