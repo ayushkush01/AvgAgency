@@ -3,21 +3,18 @@ import PageHero from '../components/layout/PageHero'
 import FinalCta from '../components/home/FinalCta'
 import ActionButton from '../components/ui/ActionButton'
 import Reveal from '../components/ui/Reveal'
-import { PlaceholderNotice, Section, SectionHeading, Tag } from '../components/ui/Section'
-import { ArrowRightIcon, ChartIcon, ShieldIcon } from '../components/ui/Icons'
+import { Section, SectionHeading } from '../components/ui/Section'
+import { ArrowRightIcon, ChartIcon, CheckIcon } from '../components/ui/Icons'
 import { pages, results } from '../content/site'
 
 const copy = pages.work
 
 export default function Work() {
-  const hasRealMetrics = results.metrics.some((metric) => !metric.placeholder)
-  const caseStudies = results.caseStudies
-
   return (
     <>
       <Seo
         title="Our Work — Influencer & UGC Campaign Case Studies"
-        description="Client-approved influencer marketing and UGC campaign results. We publish only verified numbers — everything else stays as a clearly marked placeholder."
+        description="Client-approved influencer marketing and UGC campaign results. We publish only verified numbers and measure success through clear metrics."
         path="/work"
       />
 
@@ -28,165 +25,110 @@ export default function Work() {
           event="cta_click"
           eventLabel={`Work — ${copy.cta.label}`}
           icon={<ArrowRightIcon className="h-4 w-4" />}
+          className="h-12 px-8"
         >
           {copy.cta.label}
         </ActionButton>
       </PageHero>
 
-      {/* Performance snapshot */}
+      {/* How we measure success */}
       <Section>
         <Reveal>
           <SectionHeading
             eyebrow={results.eyebrow}
             title={copy.metricsTitle}
-            description={results.paragraph}
+            description="We focus on metrics that drive business growth. Here is how we track and report on campaign performance."
           />
         </Reveal>
 
-        {!hasRealMetrics && (
-          <Reveal delay={60}>
-            <div className="mt-10">
-              <PlaceholderNotice
-                icon={<ShieldIcon className="h-5 w-5" />}
-                title={results.emptyState.title}
-                body={results.emptyState.body}
-              />
-            </div>
-          </Reveal>
-        )}
-
-        <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {results.metrics.map((metric, index) => (
-            <li key={metric.id}>
-              <Reveal delay={index * 60} className="h-full">
-                <div className="flex h-full flex-col rounded-card border border-ink/10 bg-white p-6">
-                  <p
-                    className={`font-display text-[32px] font-bold leading-none sm:text-[38px] ${
-                      metric.placeholder ? 'text-ink/20' : 'text-accent'
-                    }`}
-                  >
-                    {metric.value || '—'}
-                  </p>
-                  <p className="mt-3 text-[15px] font-bold text-ink">{metric.label}</p>
-                  <p className="mt-1 text-[13px] text-ink/50">{metric.note}</p>
-                  {metric.placeholder && (
-                    <p className="mt-3 inline-flex w-fit items-center rounded-full bg-mist px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-ink/40">
-                      Awaiting data
-                    </p>
-                  )}
+            <Reveal key={metric.id} delay={index * 100}>
+              <div className="card group h-full p-8 transition-all hover:-translate-y-1 hover:border-accent/30 hover:shadow-lift">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-soft text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+                  <ChartIcon className="h-6 w-6" />
                 </div>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      {/* Case studies */}
-      <Section tone="mist">
-        <Reveal>
-          <SectionHeading
-            title={copy.caseStudiesTitle}
-            description={results.caseStudiesEmptyState.body}
-          />
-        </Reveal>
-
-        {caseStudies.length > 0 ? (
-          <ul className="mt-12 grid gap-5 lg:grid-cols-2">
-            {caseStudies.map((study, index) => (
-              <li key={study.id}>
-                <Reveal delay={index * 80} className="h-full">
-                  <article className="flex h-full flex-col rounded-panel border border-ink/10 bg-white p-7 sm:p-8">
-                    <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-accent">
-                      {study.category}
-                    </p>
-                    <h3 className="mt-3 text-[22px] leading-tight">{study.client}</h3>
-                    <p className="mt-4 text-[15px] leading-relaxed text-ink/60">
-                      {study.summary}
-                    </p>
-
-                    {study.deliverables.length > 0 && (
-                      <ul className="mt-6 flex flex-wrap gap-2">
-                        {study.deliverables.map((item) => (
-                          <li key={item}>
-                            <Tag>{item}</Tag>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    <p className="mt-6 border-t border-ink/8 pt-6 text-[15px] font-bold text-ink">
-                      {study.resultLine}
-                    </p>
-
-                    {study.href && (
-                      <div className="mt-6">
-                        <ActionButton
-                          href={study.href}
-                          variant="text"
-                          event="cta_click"
-                          eventLabel={`Case study — ${study.client}`}
-                          icon={<ArrowRightIcon className="h-4 w-4" />}
-                        >
-                          Read the case study
-                        </ActionButton>
-                      </div>
-                    )}
-                  </article>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <Reveal delay={80}>
-            <div className="mt-10 flex flex-col items-start gap-6 rounded-panel border border-dashed border-ink/20 bg-white p-7 sm:flex-row sm:items-center sm:justify-between sm:p-9">
-              <div className="flex items-start gap-4">
-                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-mist text-accent">
-                  <ChartIcon className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="font-display text-[18px] font-bold text-ink">
-                    {results.caseStudiesEmptyState.title}
-                  </p>
-                  <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-ink/55">
-                    {results.caseStudiesEmptyState.body}
-                  </p>
+                <h3 className="mt-6 text-[18px] font-bold text-ink">{metric.label}</h3>
+                <p className="mt-3 text-[14px] leading-relaxed text-body/70">
+                  {metric.note}
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.1em] text-accent">
+                  <CheckIcon className="h-3.5 w-3.5" />
+                  Verified Metric
                 </div>
               </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
 
+      {/* Case studies template */}
+      <Section tone="mist">
+        <div className="shell">
+          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+            <Reveal>
+              <SectionHeading
+                title={copy.caseStudiesTitle}
+                description="We are currently compiling client-approved case studies for our latest campaigns in the USA, UK, UAE and India. In the meantime, you can request our full campaign deck."
+              />
+              
+              <div className="mt-10">
+                <ActionButton
+                  to={copy.caseStudyCta.to}
+                  variant="primary"
+                  event="cta_click"
+                  eventLabel="Work — Request Deck"
+                  icon={<ArrowRightIcon className="h-4 w-4" />}
+                  className="h-12 px-8"
+                >
+                  {copy.caseStudyCta.label}
+                </ActionButton>
+              </div>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <div className="relative aspect-[4/3] rounded-panel overflow-hidden bg-ink shadow-lift">
+                <div aria-hidden="true" className="line-grid-dark absolute inset-0 opacity-10" />
+                <div className="absolute inset-0 flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-white backdrop-blur-sm mb-6">
+                      <ChartIcon className="h-8 w-8" />
+                    </div>
+                    <p className="text-[18px] font-bold text-white">Full Campaign Deck</p>
+                    <p className="mt-2 text-[14px] text-white/40">Includes strategy, creator selection, and deep-dive results.</p>
+                  </div>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </Section>
+
+      {/* Category Specific CTA */}
+      <Section>
+        <Reveal>
+          <div className="rounded-panel border border-line bg-white p-8 sm:p-12 lg:p-16 shadow-soft">
+            <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <h2 className="text-[28px] font-bold leading-tight text-ink sm:text-[36px]">
+                  {copy.closing.heading}
+                </h2>
+                <p className="mt-4 text-[17px] leading-relaxed text-body/70 max-w-2xl">
+                  {copy.closing.body}
+                </p>
+              </div>
               <ActionButton
                 to={copy.cta.to}
                 variant="primary"
-                className="w-full shrink-0 px-5 sm:w-auto"
                 event="cta_click"
-                eventLabel={`Work empty state — ${copy.cta.label}`}
-                icon={<ArrowRightIcon className="h-4 w-4" />}
+                eventLabel="Work Closing CTA"
+                className="h-14 px-10 text-[16px]"
+                icon={<ArrowRightIcon className="h-5 w-5" />}
               >
-                {copy.cta.label}
+                Start a Conversation
               </ActionButton>
             </div>
-          </Reveal>
-        )}
-
-        <Reveal delay={100}>
-          <div className="mt-14 flex flex-col items-start gap-6 rounded-panel border border-ink/10 bg-white p-7 sm:flex-row sm:items-center sm:justify-between sm:p-10">
-            <div>
-              <h2 className="text-[22px] leading-tight sm:text-[26px]">
-                {copy.closing.heading}
-              </h2>
-              <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-ink/60">
-                {copy.closing.body}
-              </p>
-            </div>
-            <ActionButton
-              to={copy.cta.to}
-              variant="primary"
-              className="w-full shrink-0 sm:w-auto"
-              event="cta_click"
-              eventLabel={`Work closing — ${copy.cta.label}`}
-              icon={<ArrowRightIcon className="h-4 w-4" />}
-            >
-              {copy.cta.label}
-            </ActionButton>
           </div>
         </Reveal>
       </Section>

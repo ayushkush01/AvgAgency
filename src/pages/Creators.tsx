@@ -10,61 +10,48 @@ import {
   ArrowRightIcon,
   SearchIcon,
   UserPlusIcon,
+  CheckIcon,
 } from '../components/ui/Icons'
-import { creatorCategories, creatorNetwork, formOptions, pages } from '../content/site'
+import { pages } from '../content/site'
+import { creators, creatorFilters } from '../content/creators'
+import CreatorApplicationForm from '../components/forms/CreatorApplicationForm'
 
 const copy = pages.creators
 
-const categoryOptions = creatorCategories.items.map((item) => ({
-  value: item.slug,
-  label: item.name,
-}))
-
-/** Country list is derived from the roster so a filter can never come up empty. */
-const countryOptions = Array.from(
-  new Set(creatorNetwork.items.map((item) => item.country)),
-).map((country) => ({ value: country, label: country }))
-
-const platformOptions = formOptions.platforms.map((platform) => ({
-  value: platform,
-  label: platform,
-}))
-
-function FilterSelect({
-  id,
+function FilterChips({
   label,
   value,
   options,
   onChange,
 }: {
-  id: string
   label: string
   value: string
-  options: readonly { value: string; label: string }[]
+  options: readonly string[]
   onChange: (value: string) => void
 }) {
   return (
-    <div>
-      <label htmlFor={id} className="field-label">
+    <div className="flex flex-col gap-3">
+      <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-muted">
         {label}
-      </label>
-      <select
-        id={id}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        className="field mt-2 appearance-none bg-[length:18px] bg-[right_1rem_center] bg-no-repeat pr-11"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230A0A0B' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
-        }}
-      >
-        <option value="">{copy.filters.all}</option>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      </span>
+      <div className="flex flex-wrap gap-2">
+        {options.map((option) => {
+          const isActive = value === (option === 'All' ? '' : option)
+          return (
+            <button
+              key={option}
+              onClick={() => onChange(option === 'All' ? '' : option)}
+              className={`rounded-full px-4 py-1.5 text-[13px] font-semibold transition-all duration-200 ${
+                isActive
+                  ? 'bg-accent text-white shadow-soft'
+                  : 'bg-white text-ink/60 border border-line hover:border-ink/20 hover:text-ink'
+              }`}
+            >
+              {option}
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -87,22 +74,13 @@ export default function Creators() {
   const clearFilters = () => setParams(new URLSearchParams(), { replace: true })
 
   const filtered = useMemo(() => {
-    const categoryName = category
-      ? creatorCategories.items.find((item) => item.slug === category)?.name
-      : undefined
-
-    return creatorNetwork.items.filter((item) => {
-      // In production, hide placeholders from the filter results
-      if (!import.meta.env.DEV && item.placeholder) return false
-      
-      if (categoryName && item.niche !== categoryName) return false
+    return creators.filter((item) => {
+      if (category && item.niche !== category) return false
       if (country && item.country !== country) return false
-      if (platform && item.platform !== platform) return false
+      if (platform && !item.platforms.includes(platform as any)) return false
       return true
     })
   }, [category, country, platform])
-
-  const hasRealCreators = creatorNetwork.items.some((item) => !item.placeholder)
 
   return (
     <>
@@ -124,160 +102,167 @@ export default function Creators() {
           {copy.cta.label}
         </ActionButton>
         <ActionButton
-          to={copy.joinCta.to}
+          to="#apply"
           variant="secondary"
           event="cta_click"
-          eventLabel={`Creators — ${copy.joinCta.label}`}
+          eventLabel="Creators — Apply to join"
           className="h-12 px-8"
         >
-          {copy.joinCta.label}
+          Join Our Creator Network
         </ActionButton>
       </PageHero>
 
       <Section>
-        {!hasRealCreators ? (
+        <div className="shell">
+          {/* Filters Panel */}
           <Reveal>
-            <div className="rounded-panel border border-line bg-white p-8 sm:p-12 text-center shadow-soft max-w-4xl mx-auto">
-              <h3 className="text-[24px] font-bold text-ink sm:text-[30px]">
-                We shortlist vetted creators for every brief
-              </h3>
-              <p className="mt-4 text-[17px] leading-relaxed text-muted">
-                Our full roster is managed privately to ensure quality and exclusivity. 
-                Tell us about your brand and target market, and we will build a custom 
-                shortlist of creators who fit your goals.
-              </p>
-              <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <ActionButton
-                  to={copy.cta.to}
-                  variant="primary"
-                  event="cta_click"
-                  eventLabel="Request Shortlist"
-                  icon={<ArrowRightIcon className="h-4 w-4" />}
-                  className="h-12 px-8"
-                >
-                  Request a Creator Shortlist
-                </ActionButton>
-                <ActionButton
-                  to={copy.joinCta.to}
-                  variant="secondary"
-                  event="cta_click"
-                  eventLabel="Join Network"
-                  className="h-12 px-8"
-                >
-                  Join Our Creator Network
-                </ActionButton>
-              </div>
-            </div>
-          </Reveal>
-        ) : (
-          <>
-            {/* Filters */}
-            <Reveal>
-              <div className="rounded-panel border border-line bg-white p-6 sm:p-8">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="flex items-center gap-2.5 font-display text-[13px] font-bold uppercase tracking-[0.16em] text-muted">
-                    <SearchIcon className="h-4 w-4 text-accent" />
+            <div className="rounded-panel border border-line bg-subtle/50 p-6 sm:p-10">
+              <div className="flex flex-col gap-10">
+                <div className="flex items-center justify-between border-b border-line pb-6">
+                  <p className="flex items-center gap-2.5 font-display text-[14px] font-bold uppercase tracking-[0.16em] text-ink">
+                    <SearchIcon className="h-5 w-5 text-accent" />
                     {copy.filters.title}
                   </p>
-                  <p aria-live="polite" className="text-[14px] text-muted">
-                    <span className="font-bold text-ink">{filtered.length}</span>{' '}
-                    {copy.filters.resultsLabel}
-                  </p>
-                </div>
-
-                <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                  <FilterSelect
-                    id="filter-category"
-                    label={copy.filters.category}
-                    value={category}
-                    options={categoryOptions}
-                    onChange={(value) => setFilter('category', value)}
-                  />
-                  <FilterSelect
-                    id="filter-country"
-                    label={copy.filters.country}
-                    value={country}
-                    options={countryOptions}
-                    onChange={(value) => setFilter('country', value)}
-                  />
-                  <FilterSelect
-                    id="filter-platform"
-                    label={copy.filters.platform}
-                    value={platform}
-                    options={platformOptions}
-                    onChange={(value) => setFilter('platform', value)}
-                  />
-
-                  <div className="flex items-end">
+                  {hasFilters && (
                     <button
-                      type="button"
                       onClick={clearFilters}
-                      disabled={!hasFilters}
-                      className="btn-ghost w-full h-[52px] px-5 text-[14px] disabled:cursor-not-allowed disabled:opacity-30"
+                      className="text-[13px] font-bold text-accent hover:text-accent-hover underline underline-offset-4"
                     >
                       {copy.filters.clear}
                     </button>
-                  </div>
+                  )}
+                </div>
+
+                <div className="grid gap-10">
+                  <FilterChips
+                    label={copy.filters.category}
+                    value={category}
+                    options={creatorFilters.categories}
+                    onChange={(val) => setFilter('category', val)}
+                  />
+                  <FilterChips
+                    label={copy.filters.country}
+                    value={country}
+                    options={creatorFilters.countries}
+                    onChange={(val) => setFilter('country', val)}
+                  />
+                  <FilterChips
+                    label={copy.filters.platform}
+                    value={platform}
+                    options={creatorFilters.platforms}
+                    onChange={(val) => setFilter('platform', val)}
+                  />
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Results Summary */}
+          <Reveal delay={100} className="mt-12 flex items-center justify-between">
+            <p aria-live="polite" className="text-[15px] text-body/70">
+              Showing <span className="font-bold text-ink">{filtered.length}</span>{' '}
+              {copy.filters.resultsLabel}
+            </p>
+          </Reveal>
+
+          {/* Grid */}
+          {filtered.length > 0 ? (
+            <ul className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+              {filtered.map((creator, index) => (
+                <li key={creator.id}>
+                  <Reveal delay={(index % 4) * 60} className="h-full">
+                    <CreatorCard creator={creator} />
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <Reveal delay={60}>
+              <div className="mt-12 rounded-panel border border-line bg-white p-16 text-center shadow-soft">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-subtle text-ink/20">
+                  <SearchIcon className="h-8 w-8" />
+                </div>
+                <h3 className="mt-6 text-[22px] font-bold text-ink">
+                  {copy.filters.noResults.title}
+                </h3>
+                <p className="mt-3 text-[16px] text-body/70 max-w-md mx-auto">
+                  {copy.filters.noResults.body}
+                </p>
+                <div className="mt-10 flex flex-wrap justify-center gap-4">
+                  <ActionButton
+                    variant="ghost"
+                    onClick={clearFilters}
+                    className="h-11 px-6"
+                  >
+                    Clear all filters
+                  </ActionButton>
+                  <ActionButton
+                    to={copy.cta.to}
+                    variant="primary"
+                    className="h-11 px-6"
+                  >
+                    Tell us who you need
+                  </ActionButton>
                 </div>
               </div>
             </Reveal>
+          )}
+        </div>
+      </Section>
 
-            {/* Results */}
-            {filtered.length > 0 ? (
-              <ul className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-                {filtered.map((creator, index) => (
-                  <li key={creator.id}>
-                    <Reveal delay={(index % 4) * 60} className="h-full">
-                      <CreatorCard creator={creator} />
-                    </Reveal>
+      {/* Why Join Section */}
+      <Section tone="mist">
+        <div className="shell">
+          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+            <Reveal>
+              <SectionHeading
+                eyebrow="For Creators"
+                title={copy.whyJoin.title}
+              />
+              <ul className="mt-10 space-y-5">
+                {copy.whyJoin.items.map((item) => (
+                  <li key={item} className="flex items-start gap-4">
+                    <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-white shadow-soft">
+                      <CheckIcon className="h-3.5 w-3.5" />
+                    </div>
+                    <span className="text-[16px] font-medium text-body/80">{item}</span>
                   </li>
                 ))}
               </ul>
-            ) : (
-              <Reveal delay={60}>
-                <div className="mt-12 rounded-panel border border-line bg-subtle p-12 text-center">
-                  <SearchIcon className="mx-auto h-10 w-10 text-muted/30" />
-                  <h3 className="mt-5 text-[20px] font-bold text-ink">
-                    {copy.filters.noResults.title}
-                  </h3>
-                  <p className="mt-2 text-[15px] text-muted">
-                    {copy.filters.noResults.body}
+            </Reveal>
+
+            <Reveal delay={100} className="relative">
+              <div className="aspect-square rounded-panel overflow-hidden bg-ink p-10 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-accent text-white shadow-glow animate-float">
+                    <UserPlusIcon className="h-10 w-10" />
+                  </div>
+                  <h4 className="mt-8 text-[24px] font-bold text-white">
+                    Start your application
+                  </h4>
+                  <p className="mt-4 text-[15px] text-white/60">
+                    Takes less than 2 minutes to join the roster.
                   </p>
-                  <button
-                    onClick={clearFilters}
-                    className="mt-6 font-bold text-accent hover:text-accent-hover"
-                  >
-                    Clear all filters
-                  </button>
                 </div>
-              </Reveal>
-            )}
-          </>
-        )}
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </Section>
 
-      <Section tone="mist">
-        <div className="max-w-4xl mx-auto">
+      {/* Application Form */}
+      <Section id="apply">
+        <div className="shell max-w-4xl">
           <Reveal>
-            <SectionHeading
-              title="Are you a creator?"
-              description="Join the network and get matched with brands in your category, in your market. We work with creators across Instagram, TikTok and YouTube."
-            />
-          </Reveal>
-
-          <Reveal delay={60}>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <ActionButton
-                to={copy.joinCta.to}
-                variant="primary"
-                event="cta_click"
-                eventLabel={`Creators band — ${copy.joinCta.label}`}
-                icon={<UserPlusIcon className="h-5 w-5" />}
-                className="h-12 px-8"
-              >
-                {copy.joinCta.label}
-              </ActionButton>
+            <div className="text-center mb-16">
+              <h2 className="text-[32px] font-bold text-ink sm:text-[40px]">
+                Apply to the network
+              </h2>
+              <p className="mt-4 text-[17px] text-body/70">
+                Join creators working with brands in the USA, UK, UAE, and India.
+              </p>
             </div>
+            <CreatorApplicationForm />
           </Reveal>
         </div>
       </Section>

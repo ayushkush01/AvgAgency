@@ -10,6 +10,7 @@ import {
   MailIcon,
   MapPinIcon,
   WhatsAppIcon,
+  XIcon,
 } from '../components/ui/Icons'
 import { FlagIcon } from '../components/ui/FlagIcon'
 import { contact, pages } from '../content/site'
@@ -18,6 +19,7 @@ import {
   getInstagramUrl,
   getLinkedInUrl,
   getMailtoUrl,
+  getTwitterUrl,
   getWhatsAppUrl,
 } from '../lib/links'
 
@@ -53,6 +55,7 @@ export default function Contact() {
   const whatsappUrl = getWhatsAppUrl()
   const instagramUrl = getInstagramUrl()
   const linkedinUrl = getLinkedInUrl()
+  const twitterUrl = getTwitterUrl()
 
   return (
     <>
@@ -133,6 +136,28 @@ export default function Contact() {
                         className="underline underline-offset-4 transition-colors hover:text-white"
                       >
                         {contact.instagram.handle}
+                      </a>
+                    </DetailRow>
+                  )}
+
+                  {twitterUrl && (
+                    <DetailRow
+                      icon={<XIcon className="h-4.5 w-4.5" />}
+                      label="Twitter / X"
+                    >
+                      <a
+                        href={twitterUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() =>
+                          trackEvent('outbound_social_click', {
+                            label: 'twitter',
+                            location: 'contact_page',
+                          })
+                        }
+                        className="underline underline-offset-4 transition-colors hover:text-white"
+                      >
+                        {contact.twitter.handle}
                       </a>
                     </DetailRow>
                   )}

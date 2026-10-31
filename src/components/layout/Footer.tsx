@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom'
-import { contact, footer, nav } from '../../content/site'
-import { trackEvent } from '../../lib/analytics'
+import { footer, nav } from '../../content/site'
 import {
   getInstagramUrl,
   getLinkedInUrl,
-  getMailtoUrl,
+  getTwitterUrl,
   getWhatsAppUrl,
 } from '../../lib/links'
 import ActionButton from '../ui/ActionButton'
@@ -14,33 +13,35 @@ import {
   InstagramIcon,
   LinkedInIcon,
   WhatsAppIcon,
+  XIcon,
 } from '../ui/Icons'
 
 export default function Footer() {
   const instagramUrl = getInstagramUrl()
   const linkedinUrl = getLinkedInUrl()
+  const twitterUrl = getTwitterUrl()
   const whatsappUrl = getWhatsAppUrl()
 
   return (
-    <footer className="on-dark bg-ink text-white pt-20 pb-10 relative overflow-hidden">
+    <footer className="on-dark bg-ink text-white pt-24 pb-12 relative overflow-hidden border-t border-white/5">
       {/* Grid background texture */}
       <div aria-hidden="true" className="line-grid-dark absolute inset-0 opacity-4" />
       
       <div className="shell relative">
-        <div className="grid gap-12 lg:grid-cols-[2fr_1fr_1fr] lg:gap-20">
+        <div className="grid gap-16 lg:grid-cols-[2fr_1fr_1.2fr] lg:gap-20">
           {/* Brand Column */}
           <div className="max-w-sm">
             <Logo tone="dark" />
             <p className="mt-6 text-[15px] leading-relaxed text-white/50">
               {footer.description}
             </p>
-            <div className="mt-8 flex items-center gap-4">
+            <div className="mt-8 flex items-center gap-5">
               {instagramUrl && (
                 <a
                   href={instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/40 transition-colors hover:text-accent-soft"
+                  className="text-white/40 transition-colors hover:text-white"
                   aria-label="Instagram"
                 >
                   <InstagramIcon className="h-5 w-5" />
@@ -51,10 +52,21 @@ export default function Footer() {
                   href={linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/40 transition-colors hover:text-accent-soft"
+                  className="text-white/40 transition-colors hover:text-white"
                   aria-label="LinkedIn"
                 >
                   <LinkedInIcon className="h-5 w-5" />
+                </a>
+              )}
+              {twitterUrl && (
+                <a
+                  href={twitterUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/40 transition-colors hover:text-white"
+                  aria-label="Twitter / X"
+                >
+                  <XIcon className="h-4.5 w-4.5" />
                 </a>
               )}
               {whatsappUrl && (
@@ -62,7 +74,7 @@ export default function Footer() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/40 transition-colors hover:text-accent-soft"
+                  className="text-white/40 transition-colors hover:text-white"
                   aria-label="WhatsApp"
                 >
                   <WhatsAppIcon className="h-5 w-5" />
@@ -76,7 +88,7 @@ export default function Footer() {
             <h4 className="text-[13px] font-bold uppercase tracking-[0.2em] text-white/30">
               {footer.quickLinksTitle}
             </h4>
-            <ul className="mt-6 space-y-4">
+            <ul className="mt-8 space-y-4">
               {nav.links.map((link) => (
                 <li key={link.to}>
                   <Link
@@ -95,40 +107,15 @@ export default function Footer() {
             <h4 className="text-[13px] font-bold uppercase tracking-[0.2em] text-white/30">
               {footer.contactTitle}
             </h4>
-            <ul className="mt-6 space-y-4">
-              <li>
-                <a
-                  href={getMailtoUrl()}
-                  className="group flex flex-col gap-1"
-                  onClick={() => trackEvent('email_click', { label: contact.email, location: 'footer' })}
-                >
-                  <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-white/20">Email</span>
-                  <span className="text-[15px] text-white/70 transition-colors group-hover:text-white break-all">
-                    {contact.email}
-                  </span>
-                </a>
-              </li>
-              {whatsappUrl && (
-                <li>
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex flex-col gap-1"
-                  >
-                    <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-white/20">WhatsApp</span>
-                    <span className="text-[15px] text-white/70 transition-colors group-hover:text-white">
-                      Chat with us
-                    </span>
-                  </a>
-                </li>
-              )}
-            </ul>
-            <div className="mt-8">
+            <div className="mt-8 space-y-8">
+              <p className="text-[15px] leading-relaxed text-white/50">
+                Ready to scale your brand with creators? Let's start a conversation about your goals.
+              </p>
+              
               <ActionButton
                 to={footer.cta.to}
                 variant="primary"
-                className="h-10 px-5 text-[13px]"
+                className="h-12 px-8 text-[15px] w-full sm:w-auto"
                 event="cta_click"
                 eventLabel={footer.cta.label}
                 icon={<ArrowRightIcon className="h-4 w-4" />}

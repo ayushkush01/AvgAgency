@@ -34,3 +34,8 @@ export function getInstagramUrl(): string | null {
 export function getLinkedInUrl(): string | null {
   return contact.linkedin.url || null
 }
+
+/** Returns `null` until a real Twitter/X URL is set in content/site.ts. */
+export function getTwitterUrl(): string | null {
+  return contact.twitter.url || null
+}

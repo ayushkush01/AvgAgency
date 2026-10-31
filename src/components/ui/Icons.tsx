@@ -236,6 +236,16 @@ export function VideoIcon(props: IconProps) {
   )
 }
 
+export function StrategyIcon(props: IconProps) {
+  return (
+    <svg {...base} aria-hidden="true" {...props}>
+      <path d="M12 3v18M3 12h18" />
+      <path d="M12 8l4 4-4 4-4-4 4-4Z" />
+      <circle cx="12" cy="12" r="9" />
+    </svg>
+  )
+}
+
 export function TargetIcon(props: IconProps) {
   return (
     <svg {...base} aria-hidden="true" {...props}>
@@ -428,6 +438,7 @@ export function GamingIcon(props: IconProps) {
 export const serviceIconMap: Record<ServiceIcon, ComponentType<IconProps>> = {
   creators: CreatorsIcon,
   video: VideoIcon,
+  strategy: StrategyIcon,
 }
 
 export const categoryIconMap: Record<CategoryIcon, ComponentType<IconProps>> = {

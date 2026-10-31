@@ -2,13 +2,14 @@ import type { MouseEvent, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { trackEvent, type AnalyticsEventName } from '../../lib/analytics'
 
-export type ActionVariant = 'primary' | 'secondary' | 'onDark' | 'text'
+export type ActionVariant = 'primary' | 'secondary' | 'onDark' | 'text' | 'ghost'
 
 const variantClass: Record<ActionVariant, string> = {
   primary: 'btn-accent',
   secondary: 'btn-ghost',
   onDark: 'btn-on-dark',
   text: 'btn-text',
+  ghost: 'btn-ghost',
 }
 
 type ActionButtonProps = {
@@ -30,6 +31,8 @@ type ActionButtonProps = {
   type?: 'button' | 'submit'
   disabled?: boolean
   'aria-label'?: string
+  target?: string
+  rel?: string
 }
 
 /**
@@ -51,6 +54,8 @@ export default function ActionButton({
   type = 'button',
   disabled,
   'aria-label': ariaLabel,
+  target,
+  rel,
 }: ActionButtonProps) {
   const classes = `${variantClass[variant]} ${className}`
 
@@ -91,7 +96,8 @@ export default function ActionButton({
         className={classes}
         onClick={fireTracking}
         aria-label={ariaLabel}
-        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        target={target || (isExternal ? '_blank' : undefined)}
+        rel={rel || (isExternal ? 'noopener noreferrer' : undefined)}
       >
         {children}
         {icon}

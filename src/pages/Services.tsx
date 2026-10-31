@@ -3,6 +3,7 @@ import JsonLd from '../components/JsonLd'
 import { serviceSchema } from '../lib/schema'
 import PageHero from '../components/layout/PageHero'
 import CampaignProcess from '../components/home/CampaignProcess'
+import Packages from '../components/home/Packages'
 import FinalCta from '../components/home/FinalCta'
 import ActionButton from '../components/ui/ActionButton'
 import Reveal from '../components/ui/Reveal'
@@ -38,16 +39,9 @@ export default function Services() {
           event="cta_click"
           eventLabel={`Services — ${copy.cta.label}`}
           icon={<ArrowRightIcon className="h-4 w-4" />}
+          className="h-12 px-8"
         >
           {copy.cta.label}
-        </ActionButton>
-        <ActionButton
-          to={copy.secondaryCta.to}
-          variant="secondary"
-          event="cta_click"
-          eventLabel={`Services — ${copy.secondaryCta.label}`}
-        >
-          {copy.secondaryCta.label}
         </ActionButton>
       </PageHero>
 
@@ -66,21 +60,21 @@ export default function Services() {
 
             return (
               <Reveal key={service.id} delay={index * 80}>
-                <article className="grid gap-8 rounded-panel border border-ink/10 bg-white p-7 sm:p-9 lg:grid-cols-[1.1fr_1fr] lg:gap-14 lg:p-12">
+                <article className="grid gap-8 rounded-panel border border-line bg-white p-7 sm:p-9 lg:grid-cols-[1.1fr_1fr] lg:gap-14 lg:p-12 shadow-soft hover:shadow-lift transition-shadow duration-300">
                   <div>
-                    <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft text-accent">
                       <Icon className="h-7 w-7" />
                     </span>
 
-                    <h2 className="mt-7 text-[26px] leading-tight sm:text-[30px]">
+                    <h2 className="mt-7 text-[26px] font-bold leading-tight text-ink sm:text-[30px]">
                       {service.title}
                     </h2>
 
-                    <p className="mt-2 text-[13px] font-bold uppercase tracking-[0.14em] text-accent">
+                    <p className="mt-2 text-[14px] font-bold uppercase tracking-[0.14em] text-accent">
                       {service.tagline}
                     </p>
 
-                    <p className="mt-5 text-[15px] leading-relaxed text-ink/60 sm:text-[16px]">
+                    <p className="mt-5 text-[16px] leading-relaxed text-body/70">
                       {service.description}
                     </p>
 
@@ -91,23 +85,26 @@ export default function Services() {
                         event="cta_click"
                         eventLabel={`Services — ${service.title} — ${service.cta.label}`}
                         icon={<ArrowRightIcon className="h-4 w-4" />}
+                        className="font-bold"
                       >
                         {service.cta.label}
                       </ActionButton>
                     </div>
                   </div>
 
-                  <div className="rounded-card border border-ink/10 bg-mist/60 p-6 sm:p-7">
+                  <div className="rounded-card border border-line bg-subtle p-6 sm:p-10">
                     <p className="flex items-center gap-2.5 font-display text-[13px] font-bold uppercase tracking-[0.16em] text-ink/50">
                       <TargetIcon className="h-4 w-4 text-accent" />
                       {copy.includesTitle}
                     </p>
 
-                    <ul className="mt-5 space-y-3">
+                    <ul className="mt-6 space-y-4">
                       {service.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-3">
-                          <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                          <span className="text-[15px] text-ink/75">{feature}</span>
+                          <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent text-white">
+                            <CheckIcon className="h-3 w-3" />
+                          </div>
+                          <span className="text-[15px] font-medium text-body/80">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -121,27 +118,31 @@ export default function Services() {
 
       <CampaignProcess />
 
+      <Packages />
+
       <Section>
         <Reveal>
-          <div className="flex flex-col items-start gap-6 rounded-panel border border-ink/10 bg-mist/60 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-10">
-            <div>
-              <h2 className="text-[22px] leading-tight sm:text-[26px]">
-                {copy.closing.heading}
-              </h2>
-              <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-ink/60">
-                {copy.closing.body}
-              </p>
+          <div className="rounded-panel border border-line bg-white p-8 sm:p-12 lg:p-16 shadow-soft">
+            <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <h2 className="text-[28px] font-bold leading-tight text-ink sm:text-[36px]">
+                  {copy.closing.heading}
+                </h2>
+                <p className="mt-4 text-[17px] leading-relaxed text-body/70 max-w-2xl">
+                  {copy.closing.body}
+                </p>
+              </div>
+              <ActionButton
+                to={copy.cta.to}
+                variant="primary"
+                event="cta_click"
+                eventLabel="Services Closing CTA"
+                className="h-14 px-10 text-[16px]"
+                icon={<ArrowRightIcon className="h-5 w-5" />}
+              >
+                Get a custom quote
+              </ActionButton>
             </div>
-            <ActionButton
-              to={copy.cta.to}
-              variant="primary"
-              className="w-full shrink-0 sm:w-auto"
-              event="cta_click"
-              eventLabel={`Services closing — ${copy.cta.label}`}
-              icon={<ArrowRightIcon className="h-4 w-4" />}
-            >
-              {copy.cta.label}
-            </ActionButton>
           </div>
         </Reveal>
       </Section>

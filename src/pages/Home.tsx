@@ -2,8 +2,10 @@ import Seo from '../components/Seo'
 import JsonLd from '../components/JsonLd'
 import { faqSchema } from '../lib/schema'
 import Hero from '../components/home/Hero'
-import MarketsStrip from '../components/home/MarketsStrip'
+import TrustStrip from '../components/home/TrustStrip'
 import ServicesSection from '../components/home/ServicesSection'
+import WhyAvg from '../components/home/WhyAvg'
+import MiniProcess from '../components/home/MiniProcess'
 import CreatorNetworkPreview from '../components/home/CreatorNetworkPreview'
 import CreatorCategories from '../components/home/CreatorCategories'
 import CampaignProcess from '../components/home/CampaignProcess'
@@ -24,8 +26,10 @@ export default function Home() {
       <JsonLd data={faqSchema()} />
 
       <Hero />
-      <MarketsStrip />
+      <TrustStrip />
       <ServicesSection />
+      <WhyAvg />
+      <MiniProcess />
       <CreatorNetworkPreview />
       <CreatorCategories />
       <CampaignProcess />

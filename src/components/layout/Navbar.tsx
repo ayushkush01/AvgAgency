@@ -7,7 +7,17 @@ import { ArrowRightIcon, CloseIcon, MenuIcon } from '../ui/Icons'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+
+  // Handle scroll shadow and background
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Close the mobile panel whenever the route changes.
   useEffect(() => {
@@ -37,8 +47,22 @@ export default function Navbar() {
     }`
 
   return (
-    <header className="sticky top-0 z-50 h-[72px] border-b border-line bg-white/90 backdrop-blur-md">
-      <div className="shell flex h-full items-center justify-between gap-8">
+    <header 
+      className={`sticky top-0 z-50 h-[72px] transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white border-b border-line shadow-soft' 
+          : 'bg-white/90 lg:bg-transparent lg:backdrop-blur-none border-b border-transparent'
+      }`}
+    >
+      {/* Solid background layer for desktop scroll */}
+      <div 
+        className={`absolute inset-0 bg-white transition-opacity duration-300 lg:block hidden ${
+          scrolled ? 'opacity-100' : 'opacity-0'
+        }`} 
+        aria-hidden="true"
+      />
+
+      <div className="shell relative flex h-full items-center justify-between gap-8">
         <Logo onClick={() => setMenuOpen(false)} />
 
         {/* Desktop navigation */}

@@ -39,12 +39,16 @@ export const contact = {
   whatsappNumber: '', // TODO: add e.g. '919876543210'
   whatsappMessage: `Hi, I'd like to start a campaign with ${BRAND_NAME}`,
   instagram: {
-    handle: '@avgagency', // TODO: replace with the real handle
-    url: '', // TODO: e.g. 'https://instagram.com/avgagency'
+    handle: '@avgagency',
+    url: 'https://instagram.com/avgagency', // TODO: replace with the real URL
   },
   linkedin: {
     label: 'AVG Agency',
-    url: '', // TODO: e.g. 'https://linkedin.com/company/avgagency'
+    url: 'https://linkedin.com/company/avgagency', // TODO: replace with the real URL
+  },
+  twitter: {
+    handle: '@avgagency',
+    url: 'https://twitter.com/avgagency', // TODO: replace with the real URL
   },
   /** Shown on the contact page. */
   basedIn: 'India · Working with brands worldwide',
@@ -98,7 +102,24 @@ export const hero = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 5. MARKETS STRIP — regions only. No logo claims.
+ * 5. TRUST STRIP
+ * -------------------------------------------------------------------------- */
+export const trustStrip = {
+  platforms: [
+    { name: 'Instagram', icon: 'instagram' },
+    { name: 'TikTok', icon: 'tiktok' },
+    { name: 'YouTube', icon: 'youtube' },
+  ],
+  regions: [
+    { name: 'USA', flag: 'US' },
+    { name: 'UK', flag: 'GB' },
+    { name: 'UAE', flag: 'AE' },
+    { name: 'India', flag: 'IN' },
+  ],
+} as const
+
+/* -------------------------------------------------------------------------- *
+ * 6. MARKETS STRIP — regions only. No logo claims.
  * -------------------------------------------------------------------------- */
 export const markets = {
   label: 'Working with brands in the USA, UK, UAE, India and beyond',
@@ -112,9 +133,9 @@ export const markets = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 6. SERVICES — two core offerings.
+ * 7. SERVICES — core offerings.
  * -------------------------------------------------------------------------- */
-export type ServiceIcon = 'creators' | 'video'
+export type ServiceIcon = 'creators' | 'video' | 'strategy'
 
 export type Service = {
   id: string
@@ -128,7 +149,7 @@ export type Service = {
 
 export const services = {
   eyebrow: 'What We Do',
-  heading: 'Two services. One growth engine.',
+  heading: 'Comprehensive solutions for the creator economy.',
   paragraph:
     'Everything we do sits inside the creator economy — pairing the right voices with content built to perform.',
   linkLabel: 'Explore all services',
@@ -140,12 +161,12 @@ export const services = {
       title: 'Influencer Marketing',
       tagline: 'Right creators. Right audience.',
       description:
-        'End-to-end influencer campaigns — strategy, creator sourcing, negotiation, briefing, approvals and reporting. Micro to mega, across India and international markets.',
+        'End-to-end influencer campaigns — strategy, creator sourcing, negotiation, briefing, approvals and reporting.',
       features: [
         'Creator sourcing & vetting',
         'Campaign strategy & briefs',
         'Rate negotiation & contracting',
-        'Content approvals & scheduling',
+        'Content approvals',
         'Performance reporting',
       ],
       cta: { label: 'Start a campaign', to: '/contact' },
@@ -156,7 +177,7 @@ export const services = {
       title: 'UGC Content Creation',
       tagline: 'Authentic content that converts.',
       description:
-        'Creator-made, platform-native content built for paid and organic — delivered ready to run on Meta, TikTok, YouTube and Amazon.',
+        'Creator-made, platform-native content built for paid and organic — delivered ready to run on social and Amazon.',
       features: [
         'Authentic videos',
         'Product reviews',
@@ -166,31 +187,77 @@ export const services = {
       ],
       cta: { label: 'Request UGC samples', to: '/contact' },
     },
+    {
+      id: 'strategy-consulting',
+      icon: 'strategy',
+      title: 'Strategy & Consulting',
+      tagline: 'Data-driven roadmap to growth.',
+      description:
+        'We help brands navigate the creator landscape with clear strategies for market entry and scale.',
+      features: [
+        'Market entry strategy',
+        'Creator landscape audit',
+        'Competitor analysis',
+        'Campaign roadmaps',
+        'ROAS optimization',
+      ],
+      cta: { label: 'Get a strategy', to: '/contact' },
+    },
   ] satisfies Service[],
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 7. CREATOR NETWORK PREVIEW
- *
- *    Every entry below is a PLACEHOLDER SLOT. Replace with real, consented
- *    creator profiles before launch, then set `placeholder: false`.
+ * 8. WHY AVG — 4 differentiators.
  * -------------------------------------------------------------------------- */
-export type Creator = {
-  id: string
-  /** Real creator name. Ignored while `placeholder` is true. */
-  name: string
-  niche: string
-  platform: 'Instagram' | 'YouTube' | 'TikTok' | 'LinkedIn'
-  country: string
-  flag: string
-  /** Optional follower range label, e.g. '100K–500K'. */
-  followers: string
-  /** Optional headshot URL. Falls back to initials when empty. */
-  avatarUrl: string
-  /** Only render a link when this is set. */
-  profileUrl: string
-  placeholder: boolean
-}
+export const whyAvg = {
+  eyebrow: 'Why Work With Us',
+  heading: 'Built for brands who value transparency.',
+  items: [
+    {
+      title: 'Global Network',
+      description: 'Vetted creators across USA, UK, UAE, and India markets.',
+    },
+    {
+      title: 'Zero Fake Content',
+      description: 'We only publish verified results and consented creator profiles.',
+    },
+    {
+      title: 'Performance First',
+      description: 'Every campaign is built around measurable growth and ROI.',
+    },
+    {
+      title: 'Full Transparency',
+      description: 'Clear pricing, honest timelines, and direct communication.',
+    },
+  ],
+} as const
+
+/* -------------------------------------------------------------------------- *
+ * 9. MINI PROCESS — 3 steps.
+ * -------------------------------------------------------------------------- */
+export const miniProcess = {
+  eyebrow: 'How It Works',
+  heading: 'From brief to delivery in three steps.',
+  steps: [
+    {
+      title: 'Discovery & Brief',
+      description: 'Share your goals and market. We respond with a tailored strategy.',
+    },
+    {
+      title: 'Creator Selection',
+      description: 'We shortlist and secure the best creator fit for your brand.',
+    },
+    {
+      title: 'Campaign Launch',
+      description: 'We manage production, approvals, and delivery of high-performing content.',
+    },
+  ],
+} as const
+
+/* -------------------------------------------------------------------------- *
+ * 10. CREATOR NETWORK PREVIEW
+ * -------------------------------------------------------------------------- */
+import type { Creator } from './creators'
 
 export const creatorNetwork = {
   eyebrow: 'Creator Network',
@@ -199,25 +266,22 @@ export const creatorNetwork = {
     'A vetted roster spanning beauty, fashion, tech, fitness, food and more — matched to your market and objectives.',
   cta: { label: 'Browse all creators', to: '/creators' },
   overviewCta: { label: 'Join Our Creator Network', to: '/join' },
-  /** Shown while every entry is still a placeholder. */
   emptyState: {
     title: 'Verified creator profiles coming soon',
-    body: 'We are onboarding our roster and publishing consented profiles. Creator cards below are reserved slots — add your real roster in content/site.ts.',
+    body: 'We are onboarding our roster and publishing consented profiles. Creator cards below are reserved slots.',
   },
   items: [
-    { id: 'slot-1', name: 'Creator slot 01', niche: 'Beauty', platform: 'Instagram', country: 'India', flag: '🇮🇳', followers: '', avatarUrl: '', profileUrl: '', placeholder: true },
-    { id: 'slot-2', name: 'Creator slot 02', niche: 'Fashion', platform: 'Instagram', country: 'UAE', flag: '🇦🇪', followers: '', avatarUrl: '', profileUrl: '', placeholder: true },
-    { id: 'slot-3', name: 'Creator slot 03', niche: 'Technology', platform: 'YouTube', country: 'USA', flag: '🇺🇸', followers: '', avatarUrl: '', profileUrl: '', placeholder: true },
-    { id: 'slot-4', name: 'Creator slot 04', niche: 'Fitness', platform: 'Instagram', country: 'India', flag: '🇮🇳', followers: '', avatarUrl: '', profileUrl: '', placeholder: true },
-    { id: 'slot-5', name: 'Creator slot 05', niche: 'Lifestyle', platform: 'TikTok', country: 'UK', flag: '🇬🇧', followers: '', avatarUrl: '', profileUrl: '', placeholder: true },
-    { id: 'slot-6', name: 'Creator slot 06', niche: 'Food', platform: 'Instagram', country: 'India', flag: '🇮🇳', followers: '', avatarUrl: '', profileUrl: '', placeholder: true },
-    { id: 'slot-7', name: 'Creator slot 07', niche: 'Travel', platform: 'YouTube', country: 'UAE', flag: '🇦🇪', followers: '', avatarUrl: '', profileUrl: '', placeholder: true },
-    { id: 'slot-8', name: 'Creator slot 08', niche: 'Gaming', platform: 'YouTube', country: 'USA', flag: '🇺🇸', followers: '', avatarUrl: '', profileUrl: '', placeholder: true },
+    { id: 'slot-1', name: 'Creator slot 01', niche: 'Beauty', platforms: ['Instagram'], country: 'India', countryCode: 'IN', followers: '', placeholder: true },
+    { id: 'slot-2', name: 'Creator slot 02', niche: 'Fashion', platforms: ['Instagram'], country: 'UAE', countryCode: 'AE', followers: '', placeholder: true },
+    { id: 'slot-3', name: 'Creator slot 03', niche: 'Technology', platforms: ['YouTube'], country: 'USA', countryCode: 'US', followers: '', placeholder: true },
+    { id: 'slot-4', name: 'Creator slot 04', niche: 'Fitness', platforms: ['Instagram'], country: 'India', countryCode: 'IN', followers: '', placeholder: true },
+    { id: 'slot-5', name: 'Creator slot 05', niche: 'Lifestyle', platforms: ['TikTok'], country: 'UK', countryCode: 'GB', followers: '', placeholder: true },
+    { id: 'slot-6', name: 'Creator slot 06', niche: 'Food', platforms: ['Instagram'], country: 'India', countryCode: 'IN', followers: '', placeholder: true },
   ] satisfies Creator[],
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 8. CREATOR CATEGORIES — icon tiles, each links to /creators?category=…
+ * 11. CREATOR CATEGORIES
  * -------------------------------------------------------------------------- */
 export type CategoryIcon =
   | 'beauty'
@@ -252,7 +316,7 @@ export const creatorCategories = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 9. CAMPAIGN PROCESS — 5 steps.
+ * 12. CAMPAIGN PROCESS — 5 steps.
  * -------------------------------------------------------------------------- */
 export const process = {
   eyebrow: 'How We Work',
@@ -293,7 +357,7 @@ export const process = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 10. CAMPAIGN PACKAGES — no prices anywhere. Custom scope only.
+ * 13. CAMPAIGN PACKAGES
  * -------------------------------------------------------------------------- */
 export type Package = {
   id: string
@@ -309,49 +373,48 @@ export const packages = {
   heading: 'Flexible scopes, built around your goals.',
   paragraph:
     'Every engagement is scoped to your market, category and budget. Start from a package or build your own.',
-  /** Displayed on every card instead of a price. */
   priceLabel: 'Pricing available on request',
   primaryCta: { label: 'Customize Your Package', to: '/contact' },
   items: [
     {
-      id: 'startup',
-      name: 'Startup',
-      audience: 'For first campaigns and proofs of concept',
-      summary: 'Test the channel with a focused creator sprint.',
+      id: 'ugc-starter',
+      name: 'UGC Video Package',
+      audience: 'For brands needing high-converting ad creative',
+      summary: 'High-quality creator-made content for paid and organic social.',
       features: [
-        '1 market',
-        '4–6 creators',
-        'Campaign strategy & briefs',
-        'Content delivery',
-        'Performance summary',
+        '5–10 UGC videos',
+        'Platform-native hooks & styles',
+        'Professional editing & subtitles',
+        'Full usage rights included',
+        'Fast 7-10 day turnaround',
       ],
       highlighted: false,
     },
     {
-      id: 'growing-brand',
-      name: 'Growing Brand',
-      audience: 'For brands scaling what already works',
-      summary: 'A multi-creator programme with ongoing content output.',
+      id: 'influencer-sprint',
+      name: 'Influencer Campaign',
+      audience: 'For brands scaling reach and awareness',
+      summary: 'Managed influencer activation across key markets.',
       features: [
-        'Up to 3 markets',
-        '10–20 creators',
-        'Always-on UGC pipeline',
-        'Paid ad creative variants',
-        'Monthly reporting call',
+        '10–20 vetted creators',
+        'End-to-end management',
+        'Strategy & creative briefing',
+        'Multi-platform coverage',
+        'Performance reporting',
       ],
       highlighted: true,
     },
     {
-      id: 'established-business',
-      name: 'Established Business',
-      audience: 'For teams running always-on influencer programmes',
-      summary: 'A managed creator programme with dedicated support.',
+      id: 'always-on',
+      name: 'Always-On Ambassadors',
+      audience: 'For teams building long-term community & trust',
+      summary: 'Long-term creator partnerships for consistent growth.',
       features: [
-        'Unlimited markets',
-        '20+ creators',
+        'Monthly creator pipeline',
         'Dedicated account lead',
-        'Quarterly strategy reviews',
-        'Custom reporting & dashboards',
+        'Deep brand integration',
+        'Monthly strategy reviews',
+        'Custom dashboard access',
       ],
       highlighted: false,
     },
@@ -359,13 +422,11 @@ export const packages = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 11. RESULTS — verified metrics + case studies.
- *     All entries are placeholders until real, verified data is added.
+ * 14. RESULTS — verified metrics + case studies.
  * -------------------------------------------------------------------------- */
 export type Metric = {
   id: string
   label: string
-  /** e.g. '12.4M'. Leave as '' while placeholder. */
   value: string
   note: string
   placeholder: boolean
@@ -376,7 +437,6 @@ export type CaseStudy = {
   client: string
   category: string
   summary: string
-  /** Deliverable chips, e.g. 'Instagram Reels'. */
   deliverables: string[]
   resultLine: string
   href: string
@@ -388,30 +448,52 @@ export const results = {
   heading: 'Verified results, published as we earn them.',
   paragraph:
     'We only publish numbers a client has approved. There is nothing to inflate here.',
-  metricsLabel: 'Campaign performance',
+  metricsLabel: 'How we measure success',
+  caseStudiesLabel: 'Case Studies',
+  caseStudiesEmptyState: {
+    title: 'Case studies coming soon',
+    body: 'We are currently preparing detailed case studies. In the meantime, you can request our campaign deck.',
+  },
+  cta: { label: 'Request Campaign Deck', to: '/contact' },
   emptyState: {
     title: 'Verified results coming soon',
     body: 'We are collecting client-approved performance data. These slots are reserved for real campaign numbers.',
   },
-  caseStudiesLabel: 'Case studies',
-  caseStudiesEmptyState: {
-    title: 'No case studies published yet',
-    body: 'Each case study is released once the client has approved the numbers and assets. Add yours in content/site.ts.',
-  },
-  cta: { label: 'Start a Campaign', to: '/contact' },
   metrics: [
-    { id: 'reach', label: 'Campaign reach', value: '', note: 'Across creator content', placeholder: true },
-    { id: 'engagement', label: 'Engagement rate', value: '', note: 'Blended average', placeholder: true },
-    { id: 'views', label: 'Video views', value: '', note: 'Organic + paid', placeholder: true },
-    { id: 'conversions', label: 'Conversions driven', value: '', note: 'Tracked via link & code', placeholder: true },
+    {
+      id: 'reach',
+      label: 'Campaign Reach',
+      value: '',
+      note: 'Total unique users reached across all creator content.',
+      placeholder: true,
+    },
+    {
+      id: 'engagement',
+      label: 'Engagement Rate',
+      value: '',
+      note: 'Blended average of likes, comments, and shares.',
+      placeholder: true,
+    },
+    {
+      id: 'views',
+      label: 'Video Views',
+      value: '',
+      note: 'Organic and paid views across Instagram, TikTok, and YouTube.',
+      placeholder: true,
+    },
+    {
+      id: 'conversions',
+      label: 'Conversions driven',
+      value: '',
+      note: 'Tracked via custom link & attribution codes.',
+      placeholder: true,
+    },
   ] satisfies Metric[],
   caseStudies: [] as CaseStudy[],
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 12. TESTIMONIALS
- *     The section auto-hides while this array is empty — no invented quotes.
- *     To publish one, add an object with `placeholder: false`.
+ * 15. TESTIMONIALS
  * -------------------------------------------------------------------------- */
 export type Testimonial = {
   id: string
@@ -429,7 +511,7 @@ export const testimonials = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 13. FAQ — also emitted as FAQPage JSON-LD for search.
+ * 16. FAQ
  * -------------------------------------------------------------------------- */
 export const faq = {
   eyebrow: 'FAQ',
@@ -438,7 +520,7 @@ export const faq = {
     {
       question: 'How much does an influencer campaign cost?',
       answer:
-        'Cost depends on market, creator tier and deliverables. We scope every campaign to your budget, and pricing is shared as a tailored proposal after we understand your goals. There are no off-the-shelf rates.',
+        'Cost depends on market, creator tier and deliverables. We scope every campaign to your budget, and pricing is shared as a tailored proposal after we understand your goals.',
     },
     {
       question: 'Which countries do you work in?',
@@ -448,18 +530,28 @@ export const faq = {
     {
       question: 'How do you select creators?',
       answer:
-        'We start from your audience and objective, then screen on category fit, audience geography, engagement quality and content style. You approve the final shortlist before anything is briefed.',
+        'We start from your audience and objective, then screen on category fit, audience geography, engagement quality and content style. You approve the final shortlist.',
     },
     {
       question: 'What is the typical turnaround time?',
       answer:
-        'UGC-only deliverables usually take 1–2 weeks from brief to final files. Full influencer campaigns typically run 3–6 weeks from kickoff to delivery, depending on creator availability and approvals.',
+        'UGC-only deliverables usually take 1–2 weeks from brief to final files. Full influencer campaigns typically run 3–6 weeks from kickoff to delivery.',
+    },
+    {
+      question: 'Who owns the content usage rights?',
+      answer:
+        'Standard usage rights for organic social and paid ads are typically included for a set period. We handle all licensing negotiations with creators on your behalf.',
+    },
+    {
+      question: 'How do you track and report campaign results?',
+      answer:
+        'We provide comprehensive reports covering reach, engagement, video views, and conversions. For direct-response campaigns, we use trackable links and unique promo codes.',
     },
   ],
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 14. FINAL CTA BAND
+ * 17. FINAL CTA BAND
  * -------------------------------------------------------------------------- */
 export const finalCta = {
   eyebrow: "Let's Collaborate",
@@ -471,7 +563,7 @@ export const finalCta = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 15. FOOTER
+ * 18. FOOTER
  * -------------------------------------------------------------------------- */
 export const footer = {
   description:
@@ -479,10 +571,6 @@ export const footer = {
   quickLinksTitle: 'Quick Links',
   contactTitle: 'Contact',
   socialsTitle: 'Follow',
-  emailLabel: 'Email',
-  whatsappLabel: 'WhatsApp',
-  instagramLabel: 'Instagram',
-  linkedinLabel: 'LinkedIn',
   cta: { label: 'Get in Touch', to: '/contact' },
   legalTitle: 'Legal',
   copyright: `© ${new Date().getFullYear()} ${BRAND_NAME}. All rights reserved.`,
@@ -490,17 +578,15 @@ export const footer = {
     { label: 'Privacy Policy', to: '/privacy' },
     { label: 'Terms of Service', to: '/terms' },
   ],
-  /** Design credit — leave blank to hide. */
   credit: {
     prefix: 'Made & Designed by',
     name: 'CraftoraX',
-    email: 'craftoraxcoders@gmail.com',
     url: 'https://craftorax.in',
   },
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 16. COOKIE CONSENT
+ * 19. COOKIE CONSENT
  * -------------------------------------------------------------------------- */
 export const cookieConsent = {
   title: 'We use cookies',
@@ -511,7 +597,7 @@ export const cookieConsent = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 17. FORM OPTIONS — shared dropdown values for both forms.
+ * 20. FORM OPTIONS
  * -------------------------------------------------------------------------- */
 export const formOptions = {
   budgets: [
@@ -545,8 +631,7 @@ export const formOptions = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 18. FORMS — every label, placeholder and message for both forms.
- *     Variable names sent to EmailJS live in src/constants/emailjs.ts.
+ * 21. FORMS
  * -------------------------------------------------------------------------- */
 export type FormMessages = {
   success: { title: string; body: string }
@@ -678,7 +763,7 @@ export const forms = {
 } as const
 
 /* -------------------------------------------------------------------------- *
- * 19. PAGES — per-page hero copy. Each page renders exactly one H1.
+ * 22. PAGES
  * -------------------------------------------------------------------------- */
 export const pages = {
   services: {
@@ -716,10 +801,19 @@ export const pages = {
     },
     emptyState: {
       title: 'Verified creator profiles coming soon',
-      body: 'We are onboarding our roster and publishing consented profiles. These cards are reserved slots — add your real roster in content/site.ts.',
+      body: 'We are onboarding our roster and publishing consented profiles. These cards are reserved slots.',
     },
     cta: { label: 'Request creators', to: '/contact' },
     joinCta: { label: 'Join Our Creator Network', to: '/join' },
+    whyJoin: {
+      title: 'Why join our network?',
+      items: [
+        'Paid briefs matched to your niche and audience.',
+        'Clear deliverables and timelines before you accept.',
+        'A named contact who handles the brand side for you.',
+        'Long-term collaborations when the first campaign performs.',
+      ],
+    },
   },
 
   work: {
@@ -728,8 +822,9 @@ export const pages = {
     paragraph:
       'We only publish campaign numbers a client has signed off on. Until then, the slots below stay open rather than filled with estimates.',
     cta: { label: 'Start a Campaign', to: '/contact' },
-    metricsTitle: 'Performance snapshot',
+    metricsTitle: 'How we measure success',
     caseStudiesTitle: 'Published case studies',
+    caseStudyCta: { label: 'Request our sample campaign deck', to: '/contact' },
     closing: {
       heading: 'Want to see work relevant to your category?',
       body: 'Tell us your category and market, and we will walk you through the campaigns that match.',
@@ -800,16 +895,15 @@ export const pages = {
   privacy: {
     eyebrow: 'Legal',
     h1: 'Privacy Policy',
-    lastUpdated: 'Last updated: 29 October 2026',
+    lastUpdated: 'Last updated: 30 October 2026',
     intro:
-      'This policy explains what we collect when you use this website, why we collect it, and the choices you have. It describes what this site actually does — nothing more.',
+      'This policy explains what we collect when you use this website, why we collect it, and the choices you have.',
     sections: [
       {
         heading: 'What we collect',
         body: [
           'Information you submit through our forms: your name, email address, company, website, budget range, target market, creator preferences, social handles and any message you write.',
-          'Analytics data — pages viewed and how you arrived at the site — but only after you accept cookies. Nothing is measured before that.',
-          'Campaign attribution parameters (UTM tags and click IDs) from the link you arrived on, stored with your form submission so we know which channel brought you in.',
+          'Analytics data — pages viewed and how you arrived at the site — but only after you accept cookies.',
         ],
       },
       {
@@ -823,29 +917,21 @@ export const pages = {
       {
         heading: 'Cookies and analytics',
         body: [
-          'We use a cookie-consent banner. Analytics scripts (Google Analytics 4 and the Meta Pixel) load only after you press “Accept”. If you decline, they do not load at all.',
-          'Your choice is stored in your browser. You can change it at any time by clearing this site’s storage in your browser settings.',
+          'We use a cookie-consent banner. Analytics scripts load only after you press “Accept”. If you decline, they do not load at all.',
         ],
       },
       {
         heading: 'Who we share it with',
         body: [
-          'EmailJS — delivers form submissions to our inbox and sends your confirmation email.',
+          'EmailJS — delivers form submissions to our inbox.',
           'Google Analytics and Meta — measure site usage, only after consent.',
-          'Vercel — hosts this website and processes requests on our behalf.',
-          'We do not sell your personal information.',
-        ],
-      },
-      {
-        heading: 'How long we keep it',
-        body: [
-          'Enquiries and creator applications are kept while the relationship is active and for a reasonable period afterwards, so we can pick up a conversation where it left off. You can ask us to delete your data at any time.',
+          'Vercel — hosts this website.',
         ],
       },
       {
         heading: 'Your choices',
         body: [
-          'You can ask us to show you the personal data we hold about you, correct it, or delete it. Email us and we will action the request.',
+          'You can ask us to show you the personal data we hold about you, correct it, or delete it.',
           'You can decline analytics cookies and still use every part of this site.',
         ],
       },
@@ -859,52 +945,26 @@ export const pages = {
   terms: {
     eyebrow: 'Legal',
     h1: 'Terms of Service',
-    lastUpdated: 'Last updated: 29 October 2026',
+    lastUpdated: 'Last updated: 30 October 2026',
     intro:
-      'These terms govern your use of this website. They are written plainly, and they describe the site as it exists today.',
+      'These terms govern your use of this website.',
     sections: [
       {
         heading: 'Using this site',
         body: [
-          'You may browse this site and submit enquiries and creator applications. Do not attempt to disrupt the site, submit spam, or use the forms to send anything unlawful or misleading.',
+          'You may browse this site and submit enquiries and creator applications. Do not attempt to disrupt the site or submit spam.',
         ],
       },
       {
         heading: 'Enquiries are not agreements',
         body: [
-          'Submitting a form starts a conversation. It does not create a contract, reserve creator availability, or commit either side to a campaign. Work begins only under a separate written agreement with agreed scope and fees.',
-        ],
-      },
-      {
-        heading: 'No performance guarantee',
-        body: [
-          'Influencer and UGC campaigns depend on factors outside our control, including platform algorithms and creator audiences. We do not guarantee specific reach, engagement, conversions or revenue.',
-        ],
-      },
-      {
-        heading: 'Content and intellectual property',
-        body: [
-          'The text, layout, graphics and code on this site belong to us or are used with permission. Creator profiles and campaign assets remain the property of their respective owners.',
-          'Content created for a client is governed by that client’s agreement, not by these terms.',
-        ],
-      },
-      {
-        heading: 'Third-party links and services',
-        body: [
-          'This site links to and uses third-party services such as Instagram, LinkedIn, WhatsApp, Google Analytics, Meta and EmailJS. We are not responsible for their content or their practices.',
+          'Submitting a form starts a conversation. It does not create a contract. Work begins only under a separate written agreement.',
         ],
       },
       {
         heading: 'Limitation of liability',
         body: [
-          'The site is provided on an “as is” basis. To the extent permitted by law, we are not liable for indirect or consequential losses arising from your use of this site.',
-        ],
-      },
-      {
-        heading: 'Changes and governing law',
-        body: [
-          'We may update these terms as the site changes; the date at the top reflects the latest revision.',
-          'These terms are governed by the laws of India.',
+          'The site is provided on an “as is” basis. We are not liable for indirect losses arising from your use of this site.',
         ],
       },
       {
@@ -914,4 +974,3 @@ export const pages = {
     ],
   },
 } as const
-

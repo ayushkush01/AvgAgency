@@ -23,6 +23,7 @@ declare global {
 /** The canonical lead events we report on. */
 export type AnalyticsEventName =
   | 'cta_click'
+  | 'creator_click'
   | 'brand_inquiry_submit'
   | 'creator_application_submit'
   | 'whatsapp_click'

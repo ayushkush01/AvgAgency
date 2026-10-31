@@ -34,16 +34,20 @@ function PhoneMockup({
   raised = false,
   creator = '@creator',
   className = '',
+  animationClass = '',
 }: {
   image: string
   rotation?: number
   raised?: boolean
   creator?: string
   className?: string
+  animationClass?: string
 }) {
+  const initials = creator.replace('@', '').slice(0, 2).toUpperCase()
+  
   return (
     <div
-      className={`relative w-full transition-all duration-700 ease-out ${className}`}
+      className={`relative w-full transition-all duration-700 ease-out ${className} ${animationClass}`}
       style={{
         transform: `rotate(${rotation}deg) translateY(${raised ? '-24px' : '0'})`,
       }}
@@ -60,7 +64,9 @@ function PhoneMockup({
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
           <div className="absolute bottom-6 left-5 right-5">
             <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-full bg-white/20 backdrop-blur" />
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-accent-soft text-[10px] font-bold text-accent backdrop-blur">
+                {initials}
+              </div>
               <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur">
                 {creator}
               </span>
@@ -86,39 +92,39 @@ function HeroVisual() {
         <PhoneMockup
           image="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=vertical%20influencer%20video%20still%20lifestyle%20fashion&image_size=portrait_16_9"
           rotation={-6}
+          creator="@maya.style"
           className="z-10 mt-8 hidden sm:block"
+          animationClass="animate-float-slow"
         />
         
         {/* Middle phone (raised and in front) */}
         <PhoneMockup
           image="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=vertical%20ugc%20video%20still%20tech%20unboxing&image_size=portrait_16_9"
           raised
+          creator="@tech.reviews"
           className="z-30 col-start-1 col-end-4 sm:col-start-2 sm:col-end-3"
+          animationClass="animate-float"
         />
         
         {/* Right phone */}
         <PhoneMockup
           image="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=vertical%20creator%20video%20still%20travel%20vlog&image_size=portrait_16_9"
           rotation={6}
+          creator="@travel.vlog"
           className="z-10 mt-8 hidden sm:block"
+          animationClass="animate-float-delayed"
         />
       </div>
 
       {/* Floating glass chips */}
-      <div className="absolute -left-4 top-1/4 z-40 hidden items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 shadow-float backdrop-blur-md lg:flex">
+      <div className="absolute -left-4 top-1/4 z-40 hidden items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 shadow-float backdrop-blur-md lg:flex animate-float-slow">
         <CreatorsIcon className="h-4 w-4 text-accent" />
         <span className="text-[13px] font-semibold text-white">Influencer Marketing</span>
       </div>
 
-      <div className="absolute -right-4 bottom-1/4 z-40 hidden items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 shadow-float backdrop-blur-md lg:flex">
+      <div className="absolute -right-4 bottom-1/4 z-40 hidden items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 shadow-float backdrop-blur-md lg:flex animate-float-delayed">
         <VideoIcon className="h-4 w-4 text-accent" />
         <span className="text-[13px] font-semibold text-white">UGC Content</span>
-      </div>
-
-      <div className="absolute left-1/2 top-0 z-40 -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 shadow-float backdrop-blur-md lg:top-auto lg:bottom-4">
-        <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">
-          USA · UK · UAE · India
-        </span>
       </div>
     </div>
   )
@@ -126,7 +132,7 @@ function HeroVisual() {
 
 export default function Hero() {
   return (
-    <section className="on-dark relative min-h-[calc(100vh-72px)] overflow-hidden bg-ink py-16 sm:py-20 lg:py-0 flex items-center">
+    <section className="on-dark relative min-h-[calc(100vh-72px)] overflow-hidden bg-ink py-12 sm:py-16 lg:py-0 flex items-center">
       {/* Background effects */}
       <div
         aria-hidden="true"
@@ -137,7 +143,7 @@ export default function Hero() {
         className="absolute right-0 top-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-accent/10 blur-[120px]"
       />
       
-      <div className="shell relative grid items-center gap-16 lg:grid-cols-[55fr_45fr]">
+      <div className="shell relative grid items-center gap-12 lg:grid-cols-[55fr_45fr]">
         <div className="text-center lg:text-left">
           <Reveal>
             <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
@@ -148,7 +154,7 @@ export default function Hero() {
           </Reveal>
 
           <Reveal delay={60}>
-            <h1 className="mt-8 text-[40px] font-bold leading-[1.05] tracking-tight text-white sm:text-[56px] lg:text-[64px]">
+            <h1 className="mt-6 text-[40px] font-bold leading-[1.05] tracking-tight text-white sm:text-[56px] lg:text-[64px]">
               <Headline />
             </h1>
           </Reveal>

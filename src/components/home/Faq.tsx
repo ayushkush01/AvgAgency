@@ -1,40 +1,55 @@
 import { faq } from '../../content/site'
 import Reveal from '../ui/Reveal'
-import { PlusIcon } from '../ui/Icons'
-import { Section, SectionHeading } from '../ui/Section'
+import { SectionHeading } from '../ui/Section'
+import { PlusIcon, MinusIcon } from '../ui/Icons'
+import { useState } from 'react'
 
-/**
- * Homepage FAQ. Native <details>/<summary> keeps it keyboard-accessible and
- * ships zero extra JavaScript. The same content is emitted as FAQPage JSON-LD.
- */
+function FaqItem({ question, answer, index }: { question: string; answer: string; index: number }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <Reveal delay={index * 50}>
+      <div className="border-b border-line last:border-0">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex w-full items-center justify-between py-6 text-left transition-colors hover:text-accent"
+        >
+          <span className="text-[17px] font-bold text-ink sm:text-[19px]">{question}</span>
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-subtle text-ink/40 transition-colors group-hover:bg-accent-soft group-hover:text-accent">
+            {isOpen ? <MinusIcon className="h-4 w-4" /> : <PlusIcon className="h-4 w-4" />}
+          </div>
+        </button>
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            isOpen ? 'max-h-[500px] pb-6' : 'max-h-0'
+          }`}
+        >
+          <p className="text-[15px] leading-relaxed text-body/70 sm:text-[16px]">
+            {answer}
+          </p>
+        </div>
+      </div>
+    </Reveal>
+  )
+}
+
 export default function Faq() {
   return (
-    <Section id="faq" tone="mist">
-      <Reveal>
+    <section id="faq" className="bg-white py-24 lg:py-32">
+      <div className="shell max-w-[800px]">
+        <Reveal>
         <SectionHeading
           eyebrow={faq.eyebrow}
           title={faq.heading}
         />
       </Reveal>
 
-      <div className="mx-auto mt-10 max-w-3xl space-y-3 lg:mt-12">
-        {faq.items.map((item, index) => (
-          <Reveal key={item.question} delay={index * 50}>
-            <details className="group rounded-card border border-ink/10 bg-white [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
-                <span className="font-display text-[16px] font-bold text-ink sm:text-[17px]">
-                  {item.question}
-                </span>
-                <PlusIcon className="h-5 w-5 shrink-0 text-accent transition-transform duration-200 group-open:rotate-45" />
-              </summary>
-
-              <p className="px-5 pb-5 text-[15px] leading-relaxed text-ink/60 sm:px-6 sm:pb-6">
-                {item.answer}
-              </p>
-            </details>
-          </Reveal>
-        ))}
+        <div className="mt-16">
+          {faq.items.map((item, index) => (
+            <FaqItem key={item.question} {...item} index={index} />
+          ))}
+        </div>
       </div>
-    </Section>
+    </section>
   )
 }
